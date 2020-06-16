@@ -1,20 +1,15 @@
-# 前端开发
+## Front
 
 ```
 cd client
 yarn install
 yarn start
-```
-
-# 打包前端代码
-
-```
 yarn build
 ```
 
-# 后端开发
+## Server
 
-在 `server/model/index.js` 里面填写好数据库信息
+Edit sql info in `server/model/index.js` 
 
 ```
 cd server
