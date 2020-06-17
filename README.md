@@ -9,6 +9,8 @@ yarn build
 
 ## Server
 
+Generate RSA key in `rsa/jwt.pem` and `rsa/jwt_pub.pem`
+
 Edit sql info in `server/model/index.js` 
 
 ```

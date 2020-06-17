@@ -3,6 +3,9 @@
 .vscode
 .cache
 
+jwt.pem
+jwt_pub.pem
+
 node_modules
 dist
 web

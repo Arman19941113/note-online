@@ -12,7 +12,11 @@ router.get('/', function (req, res) {
         console.log()
         console.log(chalk.cyan('Find notes: ') + JSON.stringify(notes, null, 4))
         console.log()
-        res.send(notes)
+        res.send({
+            code: 0,
+            message: 'Success',
+            data: notes
+        })
     }).catch(error => {
         res.status(403)
         res.send({

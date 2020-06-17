@@ -21,11 +21,11 @@ app.use(cookieParser())
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('web/index.html'))
 })
-// todo cookie 校验
+app.use(express.static(path.resolve('web')))
 app.use('/auth', require('./routes/auth'))
+app.use(require('./rsa'))
 app.use('/user', require('./routes/user'))
 app.use('/note', require('./routes/note'))
-app.use(express.static(path.resolve('web')))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

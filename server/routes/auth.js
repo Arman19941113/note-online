@@ -1,7 +1,10 @@
+const fs = require('fs')
+const path = require('path')
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 const chalk = require('chalk')
+const jwt = require('jsonwebtoken')
 
 const { User } = require('../model')
 
@@ -87,6 +90,23 @@ router.get('/github/redirect', async (req, res) => {
             console.log()
         }
 
+        const payload = {
+            id: currentUser.id,
+        }
+        const privateKey = fs.readFileSync(path.resolve('rsa/jwt.pem'))
+        const token = jwt.sign(payload, privateKey, {
+            algorithm: 'RS256',
+            expiresIn: '10 days'
+        })
+        console.log()
+        console.log(chalk.cyan('Token: ') + token)
+        console.log()
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: true,
+            maxAge: 864000
+        })
         res.cookie('uid', currentUser.id, {
             httpOnly: true,
             sameSite: true,
