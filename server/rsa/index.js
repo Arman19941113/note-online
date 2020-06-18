@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken')
 
 module.exports = function (req, res, next) {
     const token = req.cookies.token
-    if (!token) {
+    const CSRFToken = req.headers['x-csrftoken']
+    if (!token || !CSRFToken || (token !== CSRFToken)) {
         console.log()
         console.log(chalk.cyan('Not login'))
         console.log()

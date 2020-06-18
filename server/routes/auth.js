@@ -107,6 +107,10 @@ router.get('/github/redirect', async (req, res) => {
             sameSite: true,
             maxAge: 864000
         })
+        res.cookie('note_online_csrftoken', token, {
+            sameSite: true,
+            maxAge: 864000
+        })
         res.cookie('uid', currentUser.id, {
             httpOnly: true,
             sameSite: true,

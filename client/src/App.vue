@@ -86,9 +86,9 @@
             }
 
             http.get('/user/info').then(res => {
-                if (res.data) avatar.value = res.data.avatar
+                avatar.value = res.data?.data?.avatar || ''
                 http.get('/note').then(res => {
-                    notes.value = res.data
+                    notes.value = res.data?.data || []
                 }).catch(err => {
                     console.warn(err)
                 })

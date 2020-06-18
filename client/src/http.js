@@ -7,3 +7,15 @@ const axiosInstance = axios.create({
 })
 
 export default axiosInstance
+
+export function injectCSRFTokenToHeaders () {
+    const cookies = {}
+    document.cookie.split('; ').forEach(item => {
+        const coo = item.split('=')
+        cookies[coo[0]] = coo[1]
+    })
+    const CSRFToken = cookies.note_online_csrftoken
+    if (CSRFToken !== undefined) {
+        axiosInstance.defaults.headers.common['X-CSRFToken'] = CSRFToken
+    }
+}
