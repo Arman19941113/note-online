@@ -22,8 +22,18 @@ app.get('/', function (req, res) {
     res.sendFile(path.resolve('web/index.html'))
 })
 app.use(express.static(path.resolve('web')))
+
+// 只有 ajax 才会接着处理，因为设置了 SameSite=Lax，后面的接口只有同域名下的请求才会携带 cookie
+app.use(function (req, res, next) {
+    if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        next()
+    } else {
+        res.status(403)
+        res.send(null)
+    }
+})
 app.use('/auth', require('./routes/auth'))
-app.use(require('./rsa'))
+app.use(require('./rsa/validateToken'))
 app.use('/user', require('./routes/user'))
 app.use('/note', require('./routes/note'))
 

@@ -91,7 +91,7 @@ router.get('/github/redirect', async (req, res) => {
         }
 
         const payload = {
-            id: currentUser.id,
+            id: currentUser.id
         }
         const privateKey = fs.readFileSync(path.resolve('rsa/jwt.pem'))
         const token = jwt.sign(payload, privateKey, {
@@ -102,18 +102,13 @@ router.get('/github/redirect', async (req, res) => {
         console.log(chalk.cyan('Token: ') + token)
         console.log()
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            sameSite: true,
-            maxAge: 864000
-        })
         res.cookie('note_online_csrftoken', token, {
-            sameSite: true,
+            sameSite: 'Lax',
             maxAge: 864000
         })
         res.cookie('uid', currentUser.id, {
             httpOnly: true,
-            sameSite: true,
+            sameSite: 'Lax',
             maxAge: 864000
         })
         res.redirect(homePage)
