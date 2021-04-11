@@ -11,7 +11,7 @@ yarn build
 
 Generate RSA key in `rsa/jwt.pem` and `rsa/jwt_pub.pem`
 
-Edit sql info in `server/model/index.js` 
+Config mysql in `server/model/index.js` 
 
 ```
 cd server
