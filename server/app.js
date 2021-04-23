@@ -24,6 +24,22 @@ app.get('/', function (req, res) {
 })
 app.use(express.static(path.resolve('web')))
 
+app.use(function (req,  res, next) {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Credentials', 'true')
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:7777')
+    res.header('Access-Control-Max-Age', '86400')
+    res.header('Access-Control-Request-Method', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-CSRFToken, Referrer-Policy, Authorization')
+    res.status(200)
+    res.send(null)
+  } else {
+    res.header('Access-Control-Allow-Credentials', 'true')
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:7777')
+    res.header('Referrer-Policy', 'no-referrer')
+    next()
+  }
+})
 // 用户登录
 app.use('/auth', require('./routes/auth'))
 
