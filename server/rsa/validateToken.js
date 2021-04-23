@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
   }
 
   // decode token
-  const publicKey = fs.readFileSync(path.resolve('rsa/jwt_pub.pem'))
+  const publicKey = fs.readFileSync(path.resolve('rsa/rsa_public_key.pem'))
   try {
     const decoded = jwt.verify(CSRFToken, publicKey)
     if (decoded.id.toString() === req.cookies.uid) {

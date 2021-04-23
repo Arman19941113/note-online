@@ -10,7 +10,10 @@ const { User } = require('../model')
 
 const clientId = '3d2ca9a4f7a56795cd83'
 const clientSecret = '83e4978bfcc491f68c8d2fdf2b1823167c1e0c7c'
+// production
 const homePage = 'http://127.0.0.1:3000'
+// dev
+// const homePage = 'http://127.0.0.1:7777'
 const redirectUri = 'http://127.0.0.1:3000/auth/github/redirect'
 
 // github 登录授权
@@ -85,7 +88,7 @@ router.get('/github/redirect', async (req, res) => {
     const payload = {
       id: currentUser.id,
     }
-    const privateKey = fs.readFileSync(path.resolve('rsa/jwt.pem'))
+    const privateKey = fs.readFileSync(path.resolve('rsa/rsa_private_key.pem'))
     const token = jwt.sign(payload, privateKey, {
       algorithm: 'RS256',
       expiresIn: '10 days',
@@ -94,11 +97,11 @@ router.get('/github/redirect', async (req, res) => {
 
     // 设置 cookie
     res.cookie('note_online_csrftoken', token, {
-      maxAge: 864000,
+      maxAge: 86400000,
     })
     res.cookie('uid', currentUser.id, {
       httpOnly: true,
-      maxAge: 864000,
+      maxAge: 86400000,
     })
     res.redirect(homePage)
   } catch (error) {
